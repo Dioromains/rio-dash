@@ -1,0 +1,574 @@
+
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
+*{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg0:#0b0d12;--bg1:#12151d;--bg2:#181c27;--bg3:#1f2434;
+  --border:#252b3a;--border2:#323a52;--border3:#3d4768;
+  --text:#d0d6e8;--text2:#7e8aa6;--text3:#404d6a;
+  --accent:#4fc3f7;--gold:#f0c060;--green:#4caf82;--purple:#b07dff;--orange:#ff8c42;--red:#e05555;
+  --enchant:#63e6a0;--gem:#e879f9;
+  --font:'Rajdhani',sans-serif;--mono:'Share Tech Mono',monospace;
+}
+body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:15px}
+
+/* ── SPLASH ── */
+.splash{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;padding:2rem;text-align:center}
+.splash-logo{font-size:52px;font-weight:700;letter-spacing:.08em;color:#fff;font-family:var(--mono)}
+.splash-logo span{color:var(--accent)}
+.splash-sub{font-size:13px;letter-spacing:.2em;color:var(--text3);text-transform:uppercase;margin:8px 0 2rem;font-family:var(--mono)}
+.splash-div{width:100%;max-width:440px;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin-bottom:2rem}
+.splash-form{display:flex;flex-direction:column;gap:10px;width:100%;max-width:440px}
+.splash-row{display:flex;gap:8px}
+/* FIX: all splash inputs same explicit height */
+.splash-row select,
+.splash-row input,
+.splash-form > input{
+  height:44px;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:15px;
+  padding:0 14px;
+  border-radius:5px;
+  outline:none;
+  -webkit-appearance:none;
+}
+.splash-row select{width:88px;flex-shrink:0;padding:0 10px}
+.splash-row input{flex:1}
+.splash-form > input{width:100%}
+.splash-row select:focus,.splash-row input:focus,.splash-form>input:focus{border-color:var(--accent)}
+.splash-btn{height:44px;background:rgba(79,195,247,.1);border:1px solid var(--accent);color:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:.1em;cursor:pointer;border-radius:5px}
+.splash-btn:hover{background:rgba(79,195,247,.2)}
+.splash-err{background:rgba(224,85,85,.12);border:1px solid rgba(224,85,85,.35);color:#f08080;padding:.5rem 1rem;border-radius:4px;font-size:13px}
+.splash-hint{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.pinned-splash{width:100%;max-width:440px;margin-top:1.5rem}
+.pinned-title{font-size:11px;color:var(--text3);font-family:var(--mono);letter-spacing:.1em;text-transform:uppercase;margin-bottom:8px}
+.pinned-list{display:flex;flex-direction:column;gap:6px}
+.pinned-item{display:flex;align-items:center;gap:10px;padding:.5rem .875rem;background:var(--bg1);border:1px solid var(--border);border-radius:5px;cursor:pointer}
+.pinned-item:hover{border-color:var(--border2)}
+.pinned-av{width:32px;height:32px;border-radius:50%;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;font-size:13px;font-weight:700;color:var(--accent);flex-shrink:0;overflow:hidden}
+.pinned-av img{width:32px;height:32px;border-radius:50%;object-fit:cover}
+.pinned-meta{flex:1;min-width:0}
+.pinned-name{font-size:14px;font-weight:600;color:var(--text)}
+.pinned-sub{font-size:11px;color:var(--text3);font-family:var(--mono)}
+.pinned-score{font-size:15px;font-weight:700;font-family:var(--mono)}
+.pinned-del{font-size:15px;color:var(--text3);cursor:pointer;padding:2px 6px;border-radius:3px}
+.pinned-del:hover{color:var(--red)}
+
+/* ── DASHBOARD ── */
+.dash{display:none;padding:.875rem}
+.topbar{display:flex;align-items:center;gap:8px;margin-bottom:.875rem;flex-wrap:wrap;padding:.5rem .75rem;background:var(--bg1);border:1px solid var(--border);border-radius:6px}
+.topbar-brand{font-size:12px;letter-spacing:.12em;color:var(--text3);font-family:var(--mono);cursor:pointer;white-space:nowrap;font-weight:700;margin-right:4px}
+.topbar-brand:hover{color:var(--accent)}
+.topbar select,.topbar input[type=text]{
+  height:34px;
+  background:var(--bg2);
+  border:1px solid var(--border2);
+  color:var(--text);
+  font-family:var(--font);
+  font-size:13px;
+  padding:0 8px;
+  border-radius:4px;
+  outline:none;
+  -webkit-appearance:none;
+}
+.topbar select{width:72px}
+.topbar input[type=text]{flex:1;min-width:80px}
+.topbar select:focus,.topbar input[type=text]:focus{border-color:var(--accent)}
+.tbtn{height:34px;padding:0 .875rem;background:transparent;border:1px solid;font-family:var(--font);font-size:12px;font-weight:600;cursor:pointer;border-radius:4px;white-space:nowrap}
+.tbtn-search{border-color:var(--accent);color:var(--accent)}.tbtn-search:hover{background:rgba(79,195,247,.1)}
+.tbtn-pin{border-color:var(--gold);color:var(--gold)}.tbtn-pin:hover{background:rgba(240,192,96,.1)}
+.tbtn-pin.pinned{background:rgba(240,192,96,.15)}
+.tbtn-export{border-color:var(--green);color:var(--green)}.tbtn-export:hover{background:rgba(76,175,130,.1)}
+.err-msg{background:rgba(224,85,85,.12);border:1px solid rgba(224,85,85,.35);color:#f08080;padding:.5rem 1rem;border-radius:4px;font-size:13px;margin-bottom:.75rem}
+
+/* ── HERO ── */
+.hero{background:var(--bg1);border:1px solid var(--border);border-radius:7px;padding:.875rem 1.25rem;display:flex;align-items:center;gap:14px;margin-bottom:10px;flex-wrap:wrap}
+.av{width:52px;height:52px;border-radius:50%;border:2px solid var(--border2);object-fit:cover;flex-shrink:0;background:var(--bg3)}
+.av-init{width:52px;height:52px;border-radius:50%;border:2px solid var(--border2);background:var(--bg3);display:flex;align-items:center;justify-content:center;font-size:20px;font-weight:700;color:var(--accent);flex-shrink:0}
+.hero-meta{flex:1;min-width:160px}
+.hero-name{font-size:21px;font-weight:700;color:#fff;line-height:1.1}
+.hero-sub{font-size:13px;color:var(--text2);margin-top:3px;display:flex;gap:6px;flex-wrap:wrap;align-items:center}
+.spec-pill{font-size:11px;padding:1px 7px;border-radius:3px;background:rgba(79,195,247,.12);color:var(--accent);border:1px solid rgba(79,195,247,.28);font-weight:600}
+.faction-h{color:#e05555;font-weight:700}.faction-a{color:#4fc3f7;font-weight:700}
+.hero-right{display:flex;align-items:center;gap:20px;flex-shrink:0;flex-wrap:wrap}
+.role-row{display:flex;gap:14px}
+.role-item{display:flex;flex-direction:column;align-items:center}
+.role-lbl{font-size:10px;letter-spacing:.08em;color:var(--text3);text-transform:uppercase;margin-bottom:1px}
+.role-val{font-size:15px;font-weight:700;font-family:var(--mono)}
+.score-block{display:flex;flex-direction:column;align-items:flex-end}
+.score-num{font-size:36px;font-weight:700;line-height:1;font-family:var(--mono)}
+.score-meta{display:flex;align-items:center;gap:8px;margin-top:3px;flex-wrap:wrap;justify-content:flex-end}
+.score-lbl{font-size:10px;letter-spacing:.14em;color:var(--text3);text-transform:uppercase}
+.season-sel{height:24px;background:var(--bg3);border:1px solid var(--border2);color:var(--text);font-family:var(--font);font-size:11px;padding:0 6px;border-radius:3px;outline:none;cursor:pointer;max-width:160px}
+.rio-link{font-size:11px;color:var(--accent);text-decoration:none;opacity:.65}
+.rio-link:hover{opacity:1}
+.delta-badge{font-size:12px;font-family:var(--mono);font-weight:700;padding:1px 7px;border-radius:3px;border:1px solid}
+.delta-up{color:#4caf82;background:rgba(76,175,130,.12);border-color:rgba(76,175,130,.3)}
+.delta-down{color:#e05555;background:rgba(224,85,85,.1);border-color:rgba(224,85,85,.25)}
+
+/* ── SCORE BAR ── */
+.score-bar-wrap{margin-bottom:10px;padding:.625rem 1rem;background:var(--bg1);border:1px solid var(--border);border-radius:7px}
+.score-bar-track{height:8px;background:var(--bg3);border-radius:99px;overflow:hidden;margin-top:6px}
+.score-bar-fill{height:100%;border-radius:99px;transition:width .6s cubic-bezier(.4,0,.2,1)}
+
+/* ── MAIN 3-COLUMN GRID ── */
+.main-grid{display:grid;grid-template-columns:220px 1fr 1fr;gap:10px;margin-bottom:10px;align-items:start}
+.col-left{display:flex;flex-direction:column;gap:10px}
+.col-mid{display:flex;flex-direction:column;gap:10px}
+.col-right{display:flex;flex-direction:column;gap:10px}
+
+/* ── PANELS ── */
+.panel{background:var(--bg1);border:1px solid var(--border);border-radius:7px;padding:.875rem 1.125rem}
+.ph{display:flex;align-items:center;gap:7px;margin-bottom:.75rem;padding-bottom:.5rem;border-bottom:1px solid var(--border)}
+.pdot{width:7px;height:7px;border-radius:50%;flex-shrink:0}
+.ptitle{font-size:12px;font-weight:700;letter-spacing:.12em;text-transform:uppercase}
+.c{color:var(--accent)}.pdot.c{background:var(--accent)}
+.g{color:var(--green)}.pdot.g{background:var(--green)}
+.o{color:var(--gold)}.pdot.o{background:var(--gold)}
+.p{color:var(--purple)}.pdot.p{background:var(--purple)}
+
+/* ── STAT BLOCK ── */
+.stat-block{display:flex;flex-direction:column;gap:6px}
+.stat-row{display:flex;justify-content:space-between;align-items:center;padding:4px 0;border-bottom:1px solid var(--border)}
+.stat-row:last-child{border-bottom:none}
+.stat-key{font-size:12px;color:var(--text2)}
+.stat-val{font-size:13px;font-weight:700;font-family:var(--mono);color:var(--text)}
+.stat-val.accent{color:var(--accent)}
+
+/* ── RUNS ── */
+.tab-row{display:flex;gap:5px;margin-bottom:.625rem}
+.xtab{font-size:12px;padding:4px 11px;border-radius:4px;cursor:pointer;background:var(--bg2);color:var(--text2);border:1px solid var(--border2);font-family:var(--font);font-weight:600}
+.xtab.on{background:rgba(79,195,247,.1);color:var(--accent);border-color:rgba(79,195,247,.35)}
+.run-row{display:grid;grid-template-columns:1fr auto auto auto;align-items:center;gap:8px;padding:.375rem .75rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:4px}
+.run-row:hover{border-color:var(--border2)}
+.run-name{font-size:13px;color:var(--text);overflow:hidden;white-space:nowrap;text-overflow:ellipsis;font-weight:500}
+.key-tag{padding:1px 8px;border-radius:3px;font-size:12px;font-weight:700;background:rgba(79,195,247,.1);color:var(--accent);border:1px solid rgba(79,195,247,.22);font-family:var(--mono);white-space:nowrap}
+.run-sc{font-family:var(--mono);font-size:13px;min-width:50px;text-align:right;font-weight:600}
+.run-tm{color:var(--text3);font-family:var(--mono);font-size:12px;min-width:38px;text-align:right}
+.pip{width:6px;height:6px;border-radius:50%;display:inline-block;margin-left:2px;vertical-align:middle}
+.pip-g{background:#f0c060}.pip-s{background:#9e9e9e}.pip-b{background:#cd7f32}
+.no-data{font-size:13px;color:var(--text3);padding:.5rem 0;font-family:var(--mono)}
+
+/* ── RAID — FIX: more padding, name and pills on separate lines ── */
+.raid-row{
+  display:flex;
+  flex-direction:column;
+  gap:6px;
+  padding:.625rem .875rem;   /* more vertical room */
+  background:var(--bg2);
+  border:1px solid var(--border);
+  border-radius:4px;
+  margin-bottom:6px;         /* gap between rows */
+}
+.raid-row:hover{border-color:var(--border2)}
+.raid-name{color:var(--text);font-size:13px;font-weight:600;line-height:1.2}
+.diff-pills{display:flex;gap:5px;flex-wrap:wrap}
+.dpill{font-size:11px;padding:2px 8px;border-radius:3px;font-family:var(--mono);font-weight:700;border:1px solid}
+.dp-m{background:rgba(240,192,96,.1);color:var(--gold);border-color:rgba(240,192,96,.3)}
+.dp-h{background:rgba(79,195,247,.08);color:var(--accent);border-color:rgba(79,195,247,.25)}
+.dp-n{background:rgba(76,175,130,.08);color:var(--green);border-color:rgba(76,175,130,.25)}
+
+/* ── GEAR ── */
+.gear-2col{display:grid;grid-template-columns:1fr 1fr;gap:6px}
+.gear-slot{display:flex;align-items:flex-start;gap:8px;padding:.45rem .75rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;transition:border-color .15s}
+.gear-slot:hover{border-color:var(--border2)}
+.gicon{width:34px;height:34px;border-radius:4px;flex-shrink:0;background:var(--bg3);border:1px solid var(--border2);display:flex;align-items:center;justify-content:center;overflow:hidden;font-size:16px;margin-top:1px}
+.gicon img{width:34px;height:34px;object-fit:cover;border-radius:3px;display:none}
+.gtext{min-width:0;flex:1}
+.glbl{font-size:10px;letter-spacing:.06em;text-transform:uppercase;color:var(--text3);margin-bottom:1px}
+.gname{font-size:12px;color:var(--text);font-weight:600;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;line-height:1.2}
+.gilvl{font-size:11px;color:var(--accent);font-family:var(--mono);margin-top:1px}
+.gear-slot.empty .gname{color:var(--text3)}
+.gear-extras{display:flex;flex-direction:column;align-items:flex-start;gap:2px;margin-top:3px}
+.etag{display:inline-flex;align-items:center;gap:4px;font-size:10px;font-family:var(--mono);border-radius:3px;padding:1px 5px;width:fit-content;max-width:100%;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;border:1px solid;line-height:1.4}
+.etag-enchant{color:var(--enchant);background:rgba(99,230,160,.08);border-color:rgba(99,230,160,.22)}
+.etag-gem{color:var(--gem);background:rgba(232,121,249,.08);border-color:rgba(232,121,249,.22)}
+.etag-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0}
+.etag-enchant .etag-dot{background:var(--enchant)}
+.etag-gem .etag-dot{background:var(--gem)}
+
+/* ── MODAL ── */
+.modal-bg{display:none;position:fixed;inset:0;background:rgba(0,0,0,.8);z-index:200;align-items:center;justify-content:center}
+.modal-bg.show{display:flex}
+.modal{background:var(--bg1);border:1px solid var(--border2);border-radius:8px;padding:1.5rem;max-width:360px;width:90%;text-align:center}
+.modal-title{font-size:15px;font-weight:700;color:#fff;margin-bottom:.75rem}
+.modal-sub{font-size:13px;color:var(--text2);line-height:1.6;margin-bottom:1.25rem}
+.modal-btns{display:flex;gap:8px;justify-content:center}
+.mbtn{height:34px;padding:0 1.125rem;font-family:var(--font);font-size:13px;font-weight:600;cursor:pointer;border-radius:4px;border:1px solid}
+.mbtn-ok{background:rgba(76,175,130,.1);border-color:var(--green);color:var(--green)}
+.mbtn-ok:hover{background:rgba(76,175,130,.2)}
+.mbtn-ok:disabled{opacity:.5;cursor:default}
+.mbtn-cancel{background:transparent;border-color:var(--border2);color:var(--text2)}
+#export-progress{font-size:12px;color:var(--text3);font-family:var(--mono);margin-top:.75rem;min-height:1.2em}
+
+@media(max-width:900px){.main-grid{grid-template-columns:1fr 1fr}}
+@media(max-width:600px){.main-grid{grid-template-columns:1fr}}
+</style>
+
+<!-- SPLASH -->
+<div class="splash" id="splash">
+  <div class="splash-logo">RIO<span>//</span>DASH</div>
+  <div class="splash-sub">World of Warcraft · Character Dashboard</div>
+  <div class="splash-div"></div>
+  <div class="splash-form">
+    <div class="splash-row">
+      <select id="s-reg"><option value="eu">EU</option><option value="us">US</option><option value="kr">KR</option><option value="tw">TW</option></select>
+      <input id="s-realm" type="text" placeholder="Realm (e.g. Ragnaros)">
+    </div>
+    <input id="s-name" type="text" placeholder="Character name">
+    <button class="splash-btn" onclick="go()">Search character</button>
+    <div id="splash-err"></div>
+    <div class="splash-hint">// PRESS ENTER TO SEARCH</div>
+  </div>
+  <div class="pinned-splash" id="pinned-splash" style="display:none">
+    <div class="pinned-title">// PINNED CHARACTERS</div>
+    <div class="pinned-list" id="pinned-list"></div>
+  </div>
+</div>
+
+<!-- DASHBOARD -->
+<div class="dash" id="dash">
+  <div class="topbar">
+    <span class="topbar-brand" onclick="backToSplash()">← RIO//DASH</span>
+    <select id="d-reg"><option value="eu">EU</option><option value="us">US</option><option value="kr">KR</option><option value="tw">TW</option></select>
+    <input id="d-realm" type="text" placeholder="Realm">
+    <input id="d-name" type="text" placeholder="Character">
+    <button class="tbtn tbtn-search" onclick="goFromDash()">Search</button>
+    <button class="tbtn tbtn-pin" id="pin-btn" onclick="togglePin()">☆ Pin</button>
+    <button class="tbtn tbtn-export" onclick="openExport()">↓ PNG</button>
+  </div>
+  <div id="d-err"></div>
+  <div id="d-out"><div class="no-data" style="padding:3rem 0;text-align:center">// LOADING...</div></div>
+</div>
+
+<div class="modal-bg" id="export-modal">
+  <div class="modal">
+    <div class="modal-title">Export character summary</div>
+    <div class="modal-sub">Generates a clean PNG summary card with score, runs and raid progress.</div>
+    <div class="modal-btns">
+      <button class="mbtn mbtn-ok" id="export-ok-btn" onclick="doExport()">Generate PNG</button>
+      <button class="mbtn mbtn-cancel" onclick="closeExport()">Cancel</button>
+    </div>
+    <div id="export-progress"></div>
+  </div>
+</div>
+<canvas id="export-canvas" style="display:none"></canvas>
+
+<script>
+const SEASON_NAMES={
+  'season-tww-3':'TWW Season 3','season-tww-2':'TWW Season 2','season-tww-1':'TWW Season 1',
+  'season-df-4':'Dragonflight S4','season-df-3':'Dragonflight S3','season-df-2':'Dragonflight S2','season-df-1':'Dragonflight S1',
+  'season-sl-4':'Shadowlands S4','season-sl-3':'Shadowlands S3','season-sl-2':'Shadowlands S2','season-sl-1':'Shadowlands S1',
+  'season-bfa-4':'BfA S4','season-bfa-3':'BfA S3','season-bfa-2':'BfA S2','season-bfa-1':'BfA S1',
+};
+const SEASON_SLUGS=['current','season-tww-3','season-tww-2','season-tww-1',
+  'season-df-4','season-df-3','season-df-2','season-df-1',
+  'season-sl-4','season-sl-3','season-sl-2','season-sl-1',
+  'season-bfa-4','season-bfa-3','season-bfa-2','season-bfa-1'];
+const FIELDS='mythic_plus_scores_by_season:'+SEASON_SLUGS.join(':')+',mythic_plus_best_runs,mythic_plus_recent_runs,raid_progression,gear';
+const TIER_LABELS=['0','500','750','1.5k','2k','2.5k','3k','3.5k'];
+const SEC_STATS=['Critical Strike','Haste','Mastery','Versatility','Avoidance','Leech','Speed','Indestructible'];
+const SLOT_ICONS={head:'⛑',neck:'📿',shoulder:'🛡',back:'🧥',chest:'👕',waist:'➰',wrist:'⌚',hands:'🧤',legs:'👖',feet:'👟',finger1:'💍',finger2:'💍',trinket1:'🔮',trinket2:'🔮',mainhand:'⚔',offhand:'🗡'};
+const SLOT_LABELS_MAP={head:'Head',neck:'Neck',shoulder:'Shoulder',back:'Back',chest:'Chest',waist:'Waist',wrist:'Bracers',hands:'Hands',legs:'Legs',feet:'Feet',finger1:'Ring 1',finger2:'Ring 2',trinket1:'Trinket 1',trinket2:'Trinket 2',mainhand:'Main hand',offhand:'Off hand'};
+
+let _seasons=[],_activeSeason=0,_currentChar=null,_currentData=null,_currentReg='eu';
+const STORE_KEY='rio_dash_v3';
+function loadStore(){try{return JSON.parse(localStorage.getItem(STORE_KEY)||'{}')}catch{return{}}}
+function saveStore(s){try{localStorage.setItem(STORE_KEY,JSON.stringify(s))}catch{}}
+
+function rioColor(s){
+  if(!s||s<=0)return'var(--text3)';
+  if(s>=3500)return'#e268a8';if(s>=3000)return'#ff8c42';if(s>=2500)return'#b07dff';
+  if(s>=2000)return'#4fc3f7';if(s>=1500)return'#4caf82';if(s>=750)return'#c8cdd8';
+  return'#7a8099';
+}
+function fmt(ms){const s=Math.floor(ms/1000),m=Math.floor(s/60),r=s%60;return m+':'+(r<10?'0':'')+r}
+function pips(n){if(!n)return'';const c=n===3?'pip-g':n===2?'pip-s':'pip-b';return Array(n).fill(`<span class="pip ${c}"></span>`).join('')}
+function stripHtml(h){return h?h.replace(/<[^>]*>/g,'').replace(/&amp;/g,'&').replace(/&lt;/g,'<').replace(/&gt;/g,'>').replace(/&nbsp;/g,' ').trim():''}
+function charKey(r,realm,name){return`${r}:${realm.toLowerCase()}:${name.toLowerCase()}`}
+
+function parseEnchantStats(tooltipHtml){
+  if(!tooltipHtml)return[];
+  const lines=tooltipHtml.split(/<br\s*\/?>/i);
+  const results=[];
+  for(const line of lines){
+    const text=stripHtml(line).trim();
+    if(/^\+\d/.test(text)&&SEC_STATS.some(s=>text.includes(s)))results.push(text);
+  }
+  return results;
+}
+
+function buildScoreBar(score){
+  const max=4000,pct=Math.min(100,Math.round(score/max*100)),color=rioColor(score);
+  const markers=TIER_LABELS.slice(1).map(l=>`<div style="flex:1;display:flex;flex-direction:column;align-items:center"><div style="width:1px;height:5px;background:var(--border2)"></div><span style="font-size:9px;color:var(--text3);font-family:var(--mono);margin-top:1px">${l}</span></div>`).join('');
+  return`<div id="score-bar-inner" class="score-bar-wrap">
+    <div style="display:flex;justify-content:space-between;align-items:center;margin-bottom:4px">
+      <span style="font-size:10px;letter-spacing:.1em;text-transform:uppercase;color:var(--text3);font-family:var(--mono)">Score progress</span>
+      <span style="font-size:11px;font-family:var(--mono);color:${color}">${score>0?score.toFixed(1):'-'} / ${max}</span>
+    </div>
+    <div class="score-bar-track"><div class="score-bar-fill" style="width:${pct}%;background:${color}"></div></div>
+    <div style="display:flex;margin-top:1px">${markers}</div>
+  </div>`;
+}
+
+function getDelta(r,realm,name,score){
+  const store=loadStore();const prev=store.scores?.[charKey(r,realm,name)];
+  if(prev==null||score<=0)return'';const d=score-prev;if(Math.abs(d)<0.5)return'';
+  const cls=d>0?'delta-up':'delta-down';return`<span class="delta-badge ${cls}">${d>0?'↑':'↓'} ${Math.abs(d).toFixed(1)}</span>`;
+}
+function saveDelta(r,realm,name,score){
+  if(score<=0)return;const store=loadStore();if(!store.scores)store.scores={};
+  store.scores[charKey(r,realm,name)]=score;saveStore(store);
+}
+
+function getPinned(){return loadStore().pinned||[]}
+function isPinned(r,realm,name){return getPinned().some(p=>charKey(p.reg,p.realm,p.name)===charKey(r,realm,name))}
+function togglePin(){
+  if(!_currentChar)return;
+  const{reg,realm,name,score,spec,thumbnail}=_currentChar;
+  const store=loadStore();if(!store.pinned)store.pinned=[];
+  const key=charKey(reg,realm,name);const idx=store.pinned.findIndex(p=>charKey(p.reg,p.realm,p.name)===key);
+  if(idx>=0)store.pinned.splice(idx,1);else store.pinned.unshift({reg,realm,name,score,spec,thumbnail});
+  saveStore(store);updatePinBtn();renderPinnedSplash();
+}
+function updatePinBtn(){
+  const btn=document.getElementById('pin-btn');if(!btn||!_currentChar)return;
+  const p=isPinned(_currentChar.reg,_currentChar.realm,_currentChar.name);
+  btn.innerHTML=p?'★ Pinned':'☆ Pin';btn.classList.toggle('pinned',p);
+}
+function renderPinnedSplash(){
+  const pinned=getPinned();const wrap=document.getElementById('pinned-splash');const list=document.getElementById('pinned-list');
+  if(!wrap||!list)return;if(!pinned.length){wrap.style.display='none';return;}
+  wrap.style.display='block';
+  list.innerHTML=pinned.map(p=>{
+    const av=p.thumbnail?`<img src="${p.thumbnail}" onerror="this.style.display='none'">`:`${(p.name||'?')[0].toUpperCase()}`;
+    return`<div class="pinned-item" onclick="loadPinned('${p.reg}','${encodeURIComponent(p.realm)}','${encodeURIComponent(p.name)}')">
+      <div class="pinned-av">${av}</div>
+      <div class="pinned-meta"><div class="pinned-name">${p.name}</div><div class="pinned-sub">${p.spec||''} · ${p.realm} (${(p.reg||'').toUpperCase()})</div></div>
+      <div class="pinned-score" style="color:${rioColor(p.score||0)}">${p.score>0?p.score.toFixed(1):'N/A'}</div>
+      <div class="pinned-del" onclick="event.stopPropagation();removePin('${charKey(p.reg,p.realm,p.name)}')">✕</div>
+    </div>`;
+  }).join('');
+}
+function removePin(key){const store=loadStore();store.pinned=(store.pinned||[]).filter(p=>charKey(p.reg,p.realm,p.name)!==key);saveStore(store);renderPinnedSplash()}
+function loadPinned(r,realm,name){document.getElementById('s-reg').value=r;document.getElementById('s-realm').value=decodeURIComponent(realm);document.getElementById('s-name').value=decodeURIComponent(name);go()}
+
+function openExport(){document.getElementById('export-modal').classList.add('show');document.getElementById('export-progress').textContent=''}
+function closeExport(){document.getElementById('export-modal').classList.remove('show')}
+async function doExport(){
+  if(!_currentChar||!_currentData)return;
+  const btn=document.getElementById('export-ok-btn');const prog=document.getElementById('export-progress');
+  btn.disabled=true;prog.textContent='// Drawing...';
+  const d=_currentData;const reg=_currentReg;const season=_seasons[_activeSeason]||{all:0,label:'—'};
+  const color=rioColor(season.all);const runs=(d.mythic_plus_best_runs||[]).slice(0,5);const raids=Object.entries(d.raid_progression||{});
+  const W=720,H=420;const canvas=document.getElementById('export-canvas');canvas.width=W*2;canvas.height=H*2;const ctx=canvas.getContext('2d');ctx.scale(2,2);
+  ctx.fillStyle='#0b0d12';ctx.fillRect(0,0,W,H);ctx.fillStyle='#12151d';rr(ctx,12,12,W-24,H-24,8);ctx.fill();ctx.strokeStyle='#252b3a';ctx.lineWidth=1;rr(ctx,12,12,W-24,H-24,8);ctx.stroke();
+  let avImg=null;if(d.thumbnail_url){try{avImg=await loadImg(d.thumbnail_url)}catch(e){}}
+  ctx.save();ctx.beginPath();ctx.arc(52,52,28,0,Math.PI*2);ctx.clip();if(avImg)ctx.drawImage(avImg,24,24,56,56);else{ctx.fillStyle='#1f2434';ctx.fillRect(24,24,56,56);}ctx.restore();
+  ctx.strokeStyle='#323a52';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(52,52,28,0,Math.PI*2);ctx.stroke();
+  ctx.font='700 22px Rajdhani,sans-serif';ctx.fillStyle='#fff';ctx.fillText(d.name||'',92,46);
+  ctx.font='500 13px Rajdhani,sans-serif';ctx.fillStyle='#7e8aa6';ctx.fillText(`${d.active_spec_name||''} ${d.class||''}  ·  ${d.faction==='horde'?'Horde':'Alliance'}  ·  ${d.realm} (${reg.toUpperCase()})`,92,64);
+  ctx.font='700 38px Share Tech Mono,monospace';ctx.fillStyle=color;ctx.textAlign='right';ctx.fillText(season.all>0?season.all.toFixed(1):'N/A',W-24,54);
+  ctx.font='500 11px Rajdhani,sans-serif';ctx.fillStyle='#404d6a';ctx.fillText('M+ SCORE  ·  '+season.label.toUpperCase(),W-24,70);ctx.textAlign='left';
+  const bW=W-48;ctx.fillStyle='#1f2434';rr(ctx,24,88,bW,7,4);ctx.fill();const pct=Math.min(1,(season.all||0)/4000);if(pct>0){ctx.fillStyle=color;rr(ctx,24,88,bW*pct,7,4);ctx.fill();}
+  ctx.strokeStyle='#252b3a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(24,110);ctx.lineTo(W-24,110);ctx.stroke();
+  ctx.font='700 11px Rajdhani,sans-serif';ctx.fillStyle='#4fc3f7';ctx.fillText('MYTHIC+ BEST RUNS',24,128);
+  runs.forEach((r,i)=>{const y=148+i*26;ctx.fillStyle='#181c27';rr(ctx,24,y-14,326,20,3);ctx.fill();ctx.font='500 13px Rajdhani,sans-serif';ctx.fillStyle='#d0d6e8';ctx.fillText((r.dungeon||r.short_name||'').slice(0,28),30,y);ctx.font='700 12px Share Tech Mono,monospace';ctx.fillStyle='#4fc3f7';ctx.textAlign='right';ctx.fillText(`+${r.mythic_level}`,240,y);ctx.fillStyle=rioColor(r.score||0);ctx.fillText((r.score||0).toFixed(1),292,y);ctx.fillStyle='#404d6a';ctx.fillText(fmt(r.clear_time_ms||0),350,y);ctx.textAlign='left';});
+  ctx.strokeStyle='#252b3a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(370,110);ctx.lineTo(370,H-24);ctx.stroke();
+  ctx.font='700 11px Rajdhani,sans-serif';ctx.fillStyle='#4caf82';ctx.fillText('RAID PROGRESSION',384,128);
+  raids.slice(0,5).forEach(([slug,p],i)=>{const y=148+i*30;const name=slug.replace(/-/g,' ').replace(/\b./,c=>c.toUpperCase());const tot=p.total_bosses||0;ctx.fillStyle='#181c27';rr(ctx,384,y-14,W-408,20,3);ctx.fill();ctx.font='500 12px Rajdhani,sans-serif';ctx.fillStyle='#d0d6e8';ctx.fillText(name.slice(0,26),390,y);const pills=[];if(p.mythic_bosses_killed!=null)pills.push({t:`M ${p.mythic_bosses_killed}/${tot}`,c:'#f0c060'});if(p.heroic_bosses_killed!=null)pills.push({t:`H ${p.heroic_bosses_killed}/${tot}`,c:'#4fc3f7'});if(p.normal_bosses_killed!=null)pills.push({t:`N ${p.normal_bosses_killed}/${tot}`,c:'#4caf82'});let px=W-24;ctx.textAlign='right';pills.reverse().forEach(pl=>{ctx.font='700 11px Share Tech Mono,monospace';ctx.fillStyle=pl.c;ctx.fillText(pl.t,px,y);px-=ctx.measureText(pl.t).width+12;});ctx.textAlign='left';});
+  const ilvl=d.gear?.item_level_equipped||'—';ctx.font='500 12px Rajdhani,sans-serif';ctx.fillStyle='#7e8aa6';ctx.fillText('Item level',24,H-30);ctx.font='700 14px Share Tech Mono,monospace';ctx.fillStyle='#fff';ctx.fillText(String(ilvl),24,H-14);
+  ctx.font='500 11px Share Tech Mono,monospace';ctx.fillStyle='#252b3a';ctx.textAlign='right';ctx.fillText('RIO//DASH',W-24,H-14);ctx.textAlign='left';
+  await new Promise(r=>setTimeout(r,50));
+  canvas.toBlob(blob=>{const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${d.name||'character'}_rio.png`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);prog.textContent='// Done!';btn.disabled=false;},'image/png');
+}
+function loadImg(src){return new Promise((res,rej)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=()=>rej();i.src=src;setTimeout(()=>rej(),4000)})}
+function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}
+
+function parseSeasons(raw){
+  if(!raw)return[];const arr=Array.isArray(raw)?raw:Object.values(raw);const result=[];
+  arr.forEach((entry,i)=>{if(!entry)return;const slug=SEASON_SLUGS[i]||('season-'+i);const sc=entry.scores||entry||{};const all=sc.all||0,tank=sc.tank||0,healer=sc.healer||0,dps=sc.dps||0;if(slug==='current'||all>0||tank>0||healer>0||dps>0)result.push({slug,label:slug==='current'?'Current Season':(SEASON_NAMES[slug]||slug),all,tank,healer,dps});});return result;
+}
+function updateScoreDisplay(){
+  const s=_seasons[_activeSeason];if(!s)return;
+  const el=document.getElementById('score-num');if(el){el.textContent=s.all>0?s.all.toFixed(1):'N/A';el.style.color=s.all>0?rioColor(s.all):'var(--text3)';}
+  const rr=document.getElementById('role-row');if(rr){const mk=(l,v)=>v>0?`<div class="role-item"><span class="role-lbl">${l}</span><span class="role-val" style="color:${rioColor(v)}">${v.toFixed(1)}</span></div>`:'';rr.innerHTML=mk('Tank',s.tank)+mk('Healer',s.healer)+mk('DPS',s.dps);}
+  const bar=document.getElementById('score-bar-inner');if(bar){const tmp=document.createElement('div');tmp.innerHTML=buildScoreBar(s.all);bar.replaceWith(tmp.firstChild);}
+}
+function changeSeason(idx){_activeSeason=parseInt(idx);updateScoreDisplay()}
+
+function runList(runs){
+  if(!runs||!runs.length)return'<div class="no-data">// NO RUNS RECORDED</div>';
+  return runs.slice(0,10).map(r=>`<div class="run-row"><span class="run-name">${r.dungeon||r.short_name||'—'}</span><span class="key-tag">+${r.mythic_level}${pips(r.num_keystone_upgrades)}</span><span class="run-sc" style="color:${rioColor(r.score||0)}">${(r.score||0).toFixed(1)}</span><span class="run-tm">${fmt(r.clear_time_ms||0)}</span></div>`).join('');
+}
+function raidList(prog){
+  if(!prog||!Object.keys(prog).length)return'<div class="no-data">// NO RAID DATA</div>';
+  return Object.entries(prog).map(([slug,p])=>{
+    const name=slug.replace(/-/g,' ').replace(/\b./,c=>c.toUpperCase());const tot=p.total_bosses||0;
+    const pills=[
+      p.mythic_bosses_killed!=null?`<span class="dpill dp-m">M ${p.mythic_bosses_killed}/${tot}</span>`:'',
+      p.heroic_bosses_killed!=null?`<span class="dpill dp-h">H ${p.heroic_bosses_killed}/${tot}</span>`:'',
+      p.normal_bosses_killed!=null?`<span class="dpill dp-n">N ${p.normal_bosses_killed}/${tot}</span>`:''
+    ].filter(Boolean).join('');
+    return`<div class="raid-row"><span class="raid-name">${name}</span><div class="diff-pills">${pills}</div></div>`;
+  }).join('');
+}
+
+function slotKey(slot,id){return`${slot}-${id}`}
+function gearSlot(slot,item){
+  const lbl=SLOT_LABELS_MAP[slot]||slot;const icon=SLOT_ICONS[slot]||'📦';
+  if(!item?.name)return`<div class="gear-slot empty"><div class="gicon"><span style="opacity:.2">${icon}</span></div><div class="gtext"><div class="glbl">${lbl}</div><div class="gname">Empty</div></div></div>`;
+  const id=item.item_id;const sk=slotKey(slot,id||0);
+  const hasGems=item.gems&&item.gems.filter(Boolean).length>0;
+  const gemTags=hasGems?item.gems.filter(Boolean).map((_,gi)=>`<span class="etag etag-gem" id="gem-${sk}-${gi}" style="display:none"><span class="etag-dot"></span></span>`).join(''):'';
+  const encTag=item.enchant?`<span class="etag etag-enchant" id="enc-${sk}" style="display:none"><span class="etag-dot"></span></span>`:'';
+  return`<div class="gear-slot" id="gs-${sk}">
+    <div class="gicon">${id?`<img alt="" id="gimg-${sk}">`:''}
+      <span id="gfb-${sk}">${icon}</span></div>
+    <div class="gtext">
+      <div class="glbl">${lbl}</div>
+      <div class="gname" title="${item.name}">${item.name}</div>
+      <div class="gilvl">${item.item_level?item.item_level+' ilvl':''}</div>
+      ${encTag||hasGems?`<div class="gear-extras">${encTag}${gemTags}</div>`:''}
+    </div>
+  </div>`;
+}
+function buildGear(items){
+  const order=['head','neck','shoulder','back','chest','waist','wrist','hands','legs','feet','finger1','finger2','mainhand','offhand','trinket1','trinket2'];
+  return`<div class="gear-2col">${order.map(s=>gearSlot(s,items[s]||null)).join('')}</div>`;
+}
+
+async function loadItemExtras(items){
+  for(const[slot,item] of Object.entries(items)){
+    if(!item?.item_id)continue;
+    const id=item.item_id;const sk=slotKey(slot,id);
+    const imgEl=document.getElementById(`gimg-${sk}`);const fbEl=document.getElementById(`gfb-${sk}`);const encEl=document.getElementById(`enc-${sk}`);
+    try{
+      const enchId=item.enchant||0;const parts=[];
+      if(item.bonuses&&item.bonuses.length)parts.push('bonus='+item.bonuses.join(':'));
+      if(enchId)parts.push('ench='+enchId);
+      if(item.gems&&item.gems.filter(Boolean).length)item.gems.filter(Boolean).forEach((g,i)=>parts.push(`gems${i+1}=${g}`));
+      const url=`https://nether.wowhead.com/tooltip/item/${id}${parts.length?'?'+parts.join('&'):''}&dataEnv=1&locale=0`;
+      const r=await fetch(url);const j=await r.json();
+      if(j?.icon&&imgEl){imgEl.src=`https://wow.zamimg.com/images/wow/icons/medium/${j.icon}.jpg`;imgEl.onload=()=>{imgEl.style.display='block';if(fbEl)fbEl.style.display='none';}}
+      if(encEl&&j?.tooltip){
+        const stats=parseEnchantStats(j.tooltip);
+        if(stats.length){encEl.innerHTML=`<span class="etag-dot"></span>${stats.join(' & ')}`;encEl.style.display='inline-flex';}
+      }
+      if(item.gems&&item.gems.filter(Boolean).length){
+        const rg=item.gems.filter(Boolean);
+        for(let gi=0;gi<rg.length;gi++){
+          const gid=rg[gi];const gel=document.getElementById(`gem-${sk}-${gi}`);if(!gel)continue;
+          try{const gr=await fetch(`https://nether.wowhead.com/tooltip/item/${gid}?dataEnv=1&locale=0`);const gj=await gr.json();const gn=gj?.name||`Gem #${gid}`;gel.innerHTML=`<span class="etag-dot"></span>${gn.length>28?gn.slice(0,26)+'…':gn}`;gel.style.display='inline-flex';}catch(e){}
+        }
+      }
+    }catch(e){}
+  }
+}
+
+function swTab(el,id){document.querySelectorAll('.xtab').forEach(t=>t.classList.remove('on'));el.classList.add('on');document.getElementById('runs-best').style.display=id==='best'?'block':'none';document.getElementById('runs-recent').style.display=id==='recent'?'block':'none';}
+
+function render(d,reg){
+  _currentData=d;_currentReg=reg;
+  const gear=d.gear;const ilvl=gear?.item_level_equipped||'—';const ilvlT=gear?.item_level_total||'—';
+  const fClass=d.faction==='horde'?'faction-h':'faction-a';const fLabel=d.faction?(d.faction[0].toUpperCase()+d.faction.slice(1)):'';
+  const avHtml=d.thumbnail_url?`<img class="av" src="${d.thumbnail_url}" onerror="this.style.display='none'">`:`<div class="av-init">${(d.name||'?')[0].toUpperCase()}</div>`;
+  _seasons=parseSeasons(d.mythic_plus_scores_by_season);_activeSeason=0;
+  const first=_seasons[0]||{all:0};const sOpts=_seasons.map((s,i)=>`<option value="${i}">${s.label}</option>`).join('');
+  const realm=d.realm||'';const name=d.name||'';
+  _currentChar={reg,realm,name,score:first.all,spec:d.active_spec_name,thumbnail:d.thumbnail_url};
+  const delta=getDelta(reg,realm,name,first.all);saveDelta(reg,realm,name,first.all);updatePinBtn();
+
+  document.getElementById('d-out').innerHTML=`
+    <div class="hero">
+      ${avHtml}
+      <div class="hero-meta">
+        <div class="hero-name">${name}</div>
+        <div class="hero-sub">
+          ${d.active_spec_name?`<span class="spec-pill">${d.active_spec_name}</span>`:''}
+          <span>${d.class||''}</span><span style="color:var(--border3)">·</span>
+          <span class="${fClass}">${fLabel}</span><span style="color:var(--border3)">·</span>
+          <span style="color:var(--text2)">${realm} (${(reg||'').toUpperCase()})</span>
+        </div>
+      </div>
+      <div class="hero-right">
+        <div class="role-row" id="role-row"></div>
+        <div class="score-block">
+          <div style="display:flex;align-items:baseline;gap:10px">
+            <div class="score-num" id="score-num" style="color:${first.all>0?rioColor(first.all):'var(--text3)'}">${first.all>0?first.all.toFixed(1):'N/A'}</div>
+            ${delta}
+          </div>
+          <div class="score-meta">
+            <span class="score-lbl">M+ Score</span>
+            ${sOpts?`<select class="season-sel" onchange="changeSeason(this.value)">${sOpts}</select>`:''}
+            ${d.profile_url?`<a class="rio-link" href="${d.profile_url}" target="_blank">↗ rio</a>`:''}
+          </div>
+        </div>
+      </div>
+    </div>
+    ${buildScoreBar(first.all)}
+    <div class="main-grid">
+      <div class="col-left">
+        <div class="panel">
+          <div class="ph"><div class="pdot o"></div><span class="ptitle o">Character</span></div>
+          <div class="stat-block">
+            <div class="stat-row"><span class="stat-key">Item level</span><span class="stat-val accent">${ilvl}<span style="font-size:11px;color:var(--text3);margin-left:4px">(${ilvlT})</span></span></div>
+            <div class="stat-row"><span class="stat-key">Race</span><span class="stat-val">${d.race||'—'}</span></div>
+            <div class="stat-row"><span class="stat-key">Class</span><span class="stat-val">${d.class||'—'}</span></div>
+            <div class="stat-row"><span class="stat-key">Spec</span><span class="stat-val accent">${d.active_spec_name||'—'}</span></div>
+            <div class="stat-row"><span class="stat-key">Faction</span><span class="stat-val ${fClass}">${fLabel||'—'}</span></div>
+            <div class="stat-row"><span class="stat-key">Realm</span><span class="stat-val" style="font-size:12px">${realm}</span></div>
+          </div>
+        </div>
+        <div class="panel">
+          <div class="ph"><div class="pdot g"></div><span class="ptitle g">Raid progression</span></div>
+          ${raidList(d.raid_progression)}
+        </div>
+      </div>
+      <div class="col-mid">
+        <div class="panel">
+          <div class="ph"><div class="pdot c"></div><span class="ptitle c">Mythic+ runs</span></div>
+          <div class="tab-row">
+            <div class="xtab on" onclick="swTab(this,'best')">Best runs</div>
+            <div class="xtab" onclick="swTab(this,'recent')">Recent runs</div>
+          </div>
+          <div id="runs-best">${runList(d.mythic_plus_best_runs)}</div>
+          <div id="runs-recent" style="display:none">${runList(d.mythic_plus_recent_runs)}</div>
+        </div>
+      </div>
+      <div class="col-right">
+        <div class="panel">
+          <div class="ph"><div class="pdot p"></div><span class="ptitle p">Equipment</span></div>
+          ${gear?.items?buildGear(gear.items):'<div class="no-data">// No gear data</div>'}
+        </div>
+      </div>
+    </div>`;
+
+  updateScoreDisplay();
+  if(gear?.items)loadItemExtras(gear.items);
+}
+
+function showDash(){document.getElementById('splash').style.display='none';document.getElementById('dash').style.display='block'}
+function backToSplash(){document.getElementById('dash').style.display='none';document.getElementById('splash').style.display='flex';renderPinnedSplash()}
+
+async function fetchChar(reg,realm,name,isFromSplash){
+  const errId=isFromSplash?'splash-err':'d-err';document.getElementById(errId).innerHTML='';
+  if(!realm||!name){document.getElementById(errId).innerHTML=`<div class="${isFromSplash?'splash-err':'err-msg'}">Enter realm and character name.</div>`;return}
+  if(isFromSplash){showDash();document.getElementById('d-out').innerHTML='<div class="no-data" style="padding:3rem 0;text-align:center">// FETCHING...</div>';document.getElementById('d-reg').value=reg;document.getElementById('d-realm').value=realm;document.getElementById('d-name').value=name;}
+  else document.getElementById('d-out').innerHTML='<div class="no-data" style="padding:3rem 0;text-align:center">// FETCHING...</div>';
+  try{
+    const url=`https://raider.io/api/v1/characters/profile?region=${encodeURIComponent(reg)}&realm=${encodeURIComponent(realm)}&name=${encodeURIComponent(name)}&fields=${encodeURIComponent(FIELDS)}`;
+    const r=await fetch(url);const data=await r.json();
+    if(!r.ok){const msg=data.message||'Character not found.';if(isFromSplash){backToSplash();document.getElementById('splash-err').innerHTML=`<div class="splash-err">${msg}</div>`;}else{document.getElementById('d-err').innerHTML=`<div class="err-msg">${msg}</div>`;document.getElementById('d-out').innerHTML='';}return;}
+    render(data,reg);
+  }catch(e){const msg='Network error.';if(isFromSplash){backToSplash();document.getElementById('splash-err').innerHTML=`<div class="splash-err">${msg}</div>`;}else{document.getElementById('d-err').innerHTML=`<div class="err-msg">${msg}</div>`;document.getElementById('d-out').innerHTML='';}}
+}
+function go(){fetchChar(document.getElementById('s-reg').value,document.getElementById('s-realm').value.trim(),document.getElementById('s-name').value.trim(),true)}
+function goFromDash(){fetchChar(document.getElementById('d-reg').value,document.getElementById('d-realm').value.trim(),document.getElementById('d-name').value.trim(),false)}
+document.getElementById('s-name').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
+document.getElementById('d-name').addEventListener('keydown',e=>{if(e.key==='Enter')goFromDash()});
+renderPinnedSplash();
+</script>
