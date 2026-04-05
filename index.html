@@ -1,6 +1,12 @@
-
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>RIO//DASH — WoW Character Dashboard</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap" rel="stylesheet">
 <style>
-@import url('https://fonts.googleapis.com/css2?family=Rajdhani:wght@400;500;600;700&family=Share+Tech+Mono&display=swap');
 *{box-sizing:border-box;margin:0;padding:0}
 :root{
   --bg0:#0b0d12;--bg1:#12151d;--bg2:#181c27;--bg3:#1f2434;
@@ -20,24 +26,15 @@ body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:1
 .splash-div{width:100%;max-width:440px;height:1px;background:linear-gradient(90deg,transparent,var(--border2),transparent);margin-bottom:2rem}
 .splash-form{display:flex;flex-direction:column;gap:10px;width:100%;max-width:440px}
 .splash-row{display:flex;gap:8px}
-/* FIX: all splash inputs same explicit height */
 .splash-row select,
 .splash-row input,
-.splash-form > input{
-  height:44px;
-  background:var(--bg2);
-  border:1px solid var(--border2);
-  color:var(--text);
-  font-family:var(--font);
-  font-size:15px;
-  padding:0 14px;
-  border-radius:5px;
-  outline:none;
-  -webkit-appearance:none;
+.splash-form>input{
+  height:44px;background:var(--bg2);border:1px solid var(--border2);color:var(--text);
+  font-family:var(--font);font-size:15px;padding:0 14px;border-radius:5px;outline:none;-webkit-appearance:none;
 }
 .splash-row select{width:88px;flex-shrink:0;padding:0 10px}
 .splash-row input{flex:1}
-.splash-form > input{width:100%}
+.splash-form>input{width:100%}
 .splash-row select:focus,.splash-row input:focus,.splash-form>input:focus{border-color:var(--accent)}
 .splash-btn{height:44px;background:rgba(79,195,247,.1);border:1px solid var(--accent);color:var(--accent);font-family:var(--font);font-size:15px;font-weight:700;letter-spacing:.1em;cursor:pointer;border-radius:5px}
 .splash-btn:hover{background:rgba(79,195,247,.2)}
@@ -63,16 +60,8 @@ body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:1
 .topbar-brand{font-size:12px;letter-spacing:.12em;color:var(--text3);font-family:var(--mono);cursor:pointer;white-space:nowrap;font-weight:700;margin-right:4px}
 .topbar-brand:hover{color:var(--accent)}
 .topbar select,.topbar input[type=text]{
-  height:34px;
-  background:var(--bg2);
-  border:1px solid var(--border2);
-  color:var(--text);
-  font-family:var(--font);
-  font-size:13px;
-  padding:0 8px;
-  border-radius:4px;
-  outline:none;
-  -webkit-appearance:none;
+  height:34px;background:var(--bg2);border:1px solid var(--border2);color:var(--text);
+  font-family:var(--font);font-size:13px;padding:0 8px;border-radius:4px;outline:none;-webkit-appearance:none;
 }
 .topbar select{width:72px}
 .topbar input[type=text]{flex:1;min-width:80px}
@@ -116,9 +105,7 @@ body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:1
 
 /* ── MAIN 3-COLUMN GRID ── */
 .main-grid{display:grid;grid-template-columns:220px 1fr 1fr;gap:10px;margin-bottom:10px;align-items:start}
-.col-left{display:flex;flex-direction:column;gap:10px}
-.col-mid{display:flex;flex-direction:column;gap:10px}
-.col-right{display:flex;flex-direction:column;gap:10px}
+.col-left,.col-mid,.col-right{display:flex;flex-direction:column;gap:10px}
 
 /* ── PANELS ── */
 .panel{background:var(--bg1);border:1px solid var(--border);border-radius:7px;padding:.875rem 1.125rem}
@@ -152,17 +139,8 @@ body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:1
 .pip-g{background:#f0c060}.pip-s{background:#9e9e9e}.pip-b{background:#cd7f32}
 .no-data{font-size:13px;color:var(--text3);padding:.5rem 0;font-family:var(--mono)}
 
-/* ── RAID — FIX: more padding, name and pills on separate lines ── */
-.raid-row{
-  display:flex;
-  flex-direction:column;
-  gap:6px;
-  padding:.625rem .875rem;   /* more vertical room */
-  background:var(--bg2);
-  border:1px solid var(--border);
-  border-radius:4px;
-  margin-bottom:6px;         /* gap between rows */
-}
+/* ── RAID ── */
+.raid-row{display:flex;flex-direction:column;gap:6px;padding:.625rem .875rem;background:var(--bg2);border:1px solid var(--border);border-radius:4px;margin-bottom:6px}
 .raid-row:hover{border-color:var(--border2)}
 .raid-name{color:var(--text);font-size:13px;font-weight:600;line-height:1.2}
 .diff-pills{display:flex;gap:5px;flex-wrap:wrap}
@@ -207,6 +185,8 @@ body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:1
 @media(max-width:900px){.main-grid{grid-template-columns:1fr 1fr}}
 @media(max-width:600px){.main-grid{grid-template-columns:1fr}}
 </style>
+</head>
+<body>
 
 <!-- SPLASH -->
 <div class="splash" id="splash">
@@ -244,6 +224,7 @@ body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:1
   <div id="d-out"><div class="no-data" style="padding:3rem 0;text-align:center">// LOADING...</div></div>
 </div>
 
+<!-- EXPORT MODAL -->
 <div class="modal-bg" id="export-modal">
   <div class="modal">
     <div class="modal-title">Export character summary</div>
@@ -258,6 +239,11 @@ body{background:var(--bg0);color:var(--text);font-family:var(--font);font-size:1
 <canvas id="export-canvas" style="display:none"></canvas>
 
 <script>
+/* ── REALM SLUG FIX ── */
+function slugifyRealm(name){
+  return name.toLowerCase().replace(/'/g,'').replace(/\s+/g,'-').replace(/[^a-z0-9-]/g,'');
+}
+
 const SEASON_NAMES={
   'season-tww-3':'TWW Season 3','season-tww-2':'TWW Season 2','season-tww-1':'TWW Season 1',
   'season-df-4':'Dragonflight S4','season-df-3':'Dragonflight S3','season-df-2':'Dragonflight S2','season-df-1':'Dragonflight S1',
@@ -354,7 +340,12 @@ function renderPinnedSplash(){
   }).join('');
 }
 function removePin(key){const store=loadStore();store.pinned=(store.pinned||[]).filter(p=>charKey(p.reg,p.realm,p.name)!==key);saveStore(store);renderPinnedSplash()}
-function loadPinned(r,realm,name){document.getElementById('s-reg').value=r;document.getElementById('s-realm').value=decodeURIComponent(realm);document.getElementById('s-name').value=decodeURIComponent(name);go()}
+function loadPinned(r,realm,name){
+  document.getElementById('s-reg').value=r;
+  document.getElementById('s-realm').value=decodeURIComponent(realm);
+  document.getElementById('s-name').value=decodeURIComponent(name);
+  go();
+}
 
 function openExport(){document.getElementById('export-modal').classList.add('show');document.getElementById('export-progress').textContent=''}
 function closeExport(){document.getElementById('export-modal').classList.remove('show')}
@@ -365,7 +356,7 @@ async function doExport(){
   const d=_currentData;const reg=_currentReg;const season=_seasons[_activeSeason]||{all:0,label:'—'};
   const color=rioColor(season.all);const runs=(d.mythic_plus_best_runs||[]).slice(0,5);const raids=Object.entries(d.raid_progression||{});
   const W=720,H=420;const canvas=document.getElementById('export-canvas');canvas.width=W*2;canvas.height=H*2;const ctx=canvas.getContext('2d');ctx.scale(2,2);
-  ctx.fillStyle='#0b0d12';ctx.fillRect(0,0,W,H);ctx.fillStyle='#12151d';rr(ctx,12,12,W-24,H-24,8);ctx.fill();ctx.strokeStyle='#252b3a';ctx.lineWidth=1;rr(ctx,12,12,W-24,H-24,8);ctx.stroke();
+  ctx.fillStyle='#0b0d12';ctx.fillRect(0,0,W,H);ctx.fillStyle='#12151d';rrect(ctx,12,12,W-24,H-24,8);ctx.fill();ctx.strokeStyle='#252b3a';ctx.lineWidth=1;rrect(ctx,12,12,W-24,H-24,8);ctx.stroke();
   let avImg=null;if(d.thumbnail_url){try{avImg=await loadImg(d.thumbnail_url)}catch(e){}}
   ctx.save();ctx.beginPath();ctx.arc(52,52,28,0,Math.PI*2);ctx.clip();if(avImg)ctx.drawImage(avImg,24,24,56,56);else{ctx.fillStyle='#1f2434';ctx.fillRect(24,24,56,56);}ctx.restore();
   ctx.strokeStyle='#323a52';ctx.lineWidth=1.5;ctx.beginPath();ctx.arc(52,52,28,0,Math.PI*2);ctx.stroke();
@@ -373,20 +364,20 @@ async function doExport(){
   ctx.font='500 13px Rajdhani,sans-serif';ctx.fillStyle='#7e8aa6';ctx.fillText(`${d.active_spec_name||''} ${d.class||''}  ·  ${d.faction==='horde'?'Horde':'Alliance'}  ·  ${d.realm} (${reg.toUpperCase()})`,92,64);
   ctx.font='700 38px Share Tech Mono,monospace';ctx.fillStyle=color;ctx.textAlign='right';ctx.fillText(season.all>0?season.all.toFixed(1):'N/A',W-24,54);
   ctx.font='500 11px Rajdhani,sans-serif';ctx.fillStyle='#404d6a';ctx.fillText('M+ SCORE  ·  '+season.label.toUpperCase(),W-24,70);ctx.textAlign='left';
-  const bW=W-48;ctx.fillStyle='#1f2434';rr(ctx,24,88,bW,7,4);ctx.fill();const pct=Math.min(1,(season.all||0)/4000);if(pct>0){ctx.fillStyle=color;rr(ctx,24,88,bW*pct,7,4);ctx.fill();}
+  const bW=W-48;ctx.fillStyle='#1f2434';rrect(ctx,24,88,bW,7,4);ctx.fill();const pct=Math.min(1,(season.all||0)/4000);if(pct>0){ctx.fillStyle=color;rrect(ctx,24,88,bW*pct,7,4);ctx.fill();}
   ctx.strokeStyle='#252b3a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(24,110);ctx.lineTo(W-24,110);ctx.stroke();
   ctx.font='700 11px Rajdhani,sans-serif';ctx.fillStyle='#4fc3f7';ctx.fillText('MYTHIC+ BEST RUNS',24,128);
-  runs.forEach((r,i)=>{const y=148+i*26;ctx.fillStyle='#181c27';rr(ctx,24,y-14,326,20,3);ctx.fill();ctx.font='500 13px Rajdhani,sans-serif';ctx.fillStyle='#d0d6e8';ctx.fillText((r.dungeon||r.short_name||'').slice(0,28),30,y);ctx.font='700 12px Share Tech Mono,monospace';ctx.fillStyle='#4fc3f7';ctx.textAlign='right';ctx.fillText(`+${r.mythic_level}`,240,y);ctx.fillStyle=rioColor(r.score||0);ctx.fillText((r.score||0).toFixed(1),292,y);ctx.fillStyle='#404d6a';ctx.fillText(fmt(r.clear_time_ms||0),350,y);ctx.textAlign='left';});
+  runs.forEach((r,i)=>{const y=148+i*26;ctx.fillStyle='#181c27';rrect(ctx,24,y-14,326,20,3);ctx.fill();ctx.font='500 13px Rajdhani,sans-serif';ctx.fillStyle='#d0d6e8';ctx.fillText((r.dungeon||r.short_name||'').slice(0,28),30,y);ctx.font='700 12px Share Tech Mono,monospace';ctx.fillStyle='#4fc3f7';ctx.textAlign='right';ctx.fillText(`+${r.mythic_level}`,240,y);ctx.fillStyle=rioColor(r.score||0);ctx.fillText((r.score||0).toFixed(1),292,y);ctx.fillStyle='#404d6a';ctx.fillText(fmt(r.clear_time_ms||0),350,y);ctx.textAlign='left';});
   ctx.strokeStyle='#252b3a';ctx.lineWidth=1;ctx.beginPath();ctx.moveTo(370,110);ctx.lineTo(370,H-24);ctx.stroke();
   ctx.font='700 11px Rajdhani,sans-serif';ctx.fillStyle='#4caf82';ctx.fillText('RAID PROGRESSION',384,128);
-  raids.slice(0,5).forEach(([slug,p],i)=>{const y=148+i*30;const name=slug.replace(/-/g,' ').replace(/\b./,c=>c.toUpperCase());const tot=p.total_bosses||0;ctx.fillStyle='#181c27';rr(ctx,384,y-14,W-408,20,3);ctx.fill();ctx.font='500 12px Rajdhani,sans-serif';ctx.fillStyle='#d0d6e8';ctx.fillText(name.slice(0,26),390,y);const pills=[];if(p.mythic_bosses_killed!=null)pills.push({t:`M ${p.mythic_bosses_killed}/${tot}`,c:'#f0c060'});if(p.heroic_bosses_killed!=null)pills.push({t:`H ${p.heroic_bosses_killed}/${tot}`,c:'#4fc3f7'});if(p.normal_bosses_killed!=null)pills.push({t:`N ${p.normal_bosses_killed}/${tot}`,c:'#4caf82'});let px=W-24;ctx.textAlign='right';pills.reverse().forEach(pl=>{ctx.font='700 11px Share Tech Mono,monospace';ctx.fillStyle=pl.c;ctx.fillText(pl.t,px,y);px-=ctx.measureText(pl.t).width+12;});ctx.textAlign='left';});
+  raids.slice(0,5).forEach(([slug,p],i)=>{const y=148+i*30;const name=slug.replace(/-/g,' ').replace(/\b./,c=>c.toUpperCase());const tot=p.total_bosses||0;ctx.fillStyle='#181c27';rrect(ctx,384,y-14,W-408,20,3);ctx.fill();ctx.font='500 12px Rajdhani,sans-serif';ctx.fillStyle='#d0d6e8';ctx.fillText(name.slice(0,26),390,y);const pills=[];if(p.mythic_bosses_killed!=null)pills.push({t:`M ${p.mythic_bosses_killed}/${tot}`,c:'#f0c060'});if(p.heroic_bosses_killed!=null)pills.push({t:`H ${p.heroic_bosses_killed}/${tot}`,c:'#4fc3f7'});if(p.normal_bosses_killed!=null)pills.push({t:`N ${p.normal_bosses_killed}/${tot}`,c:'#4caf82'});let px=W-24;ctx.textAlign='right';pills.reverse().forEach(pl=>{ctx.font='700 11px Share Tech Mono,monospace';ctx.fillStyle=pl.c;ctx.fillText(pl.t,px,y);px-=ctx.measureText(pl.t).width+12;});ctx.textAlign='left';});
   const ilvl=d.gear?.item_level_equipped||'—';ctx.font='500 12px Rajdhani,sans-serif';ctx.fillStyle='#7e8aa6';ctx.fillText('Item level',24,H-30);ctx.font='700 14px Share Tech Mono,monospace';ctx.fillStyle='#fff';ctx.fillText(String(ilvl),24,H-14);
   ctx.font='500 11px Share Tech Mono,monospace';ctx.fillStyle='#252b3a';ctx.textAlign='right';ctx.fillText('RIO//DASH',W-24,H-14);ctx.textAlign='left';
   await new Promise(r=>setTimeout(r,50));
   canvas.toBlob(blob=>{const url=URL.createObjectURL(blob);const a=document.createElement('a');a.href=url;a.download=`${d.name||'character'}_rio.png`;document.body.appendChild(a);a.click();document.body.removeChild(a);URL.revokeObjectURL(url);prog.textContent='// Done!';btn.disabled=false;},'image/png');
 }
 function loadImg(src){return new Promise((res,rej)=>{const i=new Image();i.crossOrigin='anonymous';i.onload=()=>res(i);i.onerror=()=>rej();i.src=src;setTimeout(()=>rej(),4000)})}
-function rr(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}
+function rrect(ctx,x,y,w,h,r){ctx.beginPath();ctx.moveTo(x+r,y);ctx.lineTo(x+w-r,y);ctx.quadraticCurveTo(x+w,y,x+w,y+r);ctx.lineTo(x+w,y+h-r);ctx.quadraticCurveTo(x+w,y+h,x+w-r,y+h);ctx.lineTo(x+r,y+h);ctx.quadraticCurveTo(x,y+h,x,y+h-r);ctx.lineTo(x,y+r);ctx.quadraticCurveTo(x,y,x+r,y);ctx.closePath()}
 
 function parseSeasons(raw){
   if(!raw)return[];const arr=Array.isArray(raw)?raw:Object.values(raw);const result=[];
@@ -408,11 +399,7 @@ function raidList(prog){
   if(!prog||!Object.keys(prog).length)return'<div class="no-data">// NO RAID DATA</div>';
   return Object.entries(prog).map(([slug,p])=>{
     const name=slug.replace(/-/g,' ').replace(/\b./,c=>c.toUpperCase());const tot=p.total_bosses||0;
-    const pills=[
-      p.mythic_bosses_killed!=null?`<span class="dpill dp-m">M ${p.mythic_bosses_killed}/${tot}</span>`:'',
-      p.heroic_bosses_killed!=null?`<span class="dpill dp-h">H ${p.heroic_bosses_killed}/${tot}</span>`:'',
-      p.normal_bosses_killed!=null?`<span class="dpill dp-n">N ${p.normal_bosses_killed}/${tot}</span>`:''
-    ].filter(Boolean).join('');
+    const pills=[p.mythic_bosses_killed!=null?`<span class="dpill dp-m">M ${p.mythic_bosses_killed}/${tot}</span>`:'',p.heroic_bosses_killed!=null?`<span class="dpill dp-h">H ${p.heroic_bosses_killed}/${tot}</span>`:'',p.normal_bosses_killed!=null?`<span class="dpill dp-n">N ${p.normal_bosses_killed}/${tot}</span>`:''].filter(Boolean).join('');
     return`<div class="raid-row"><span class="raid-name">${name}</span><div class="diff-pills">${pills}</div></div>`;
   }).join('');
 }
@@ -557,18 +544,42 @@ function backToSplash(){document.getElementById('dash').style.display='none';doc
 async function fetchChar(reg,realm,name,isFromSplash){
   const errId=isFromSplash?'splash-err':'d-err';document.getElementById(errId).innerHTML='';
   if(!realm||!name){document.getElementById(errId).innerHTML=`<div class="${isFromSplash?'splash-err':'err-msg'}">Enter realm and character name.</div>`;return}
-  if(isFromSplash){showDash();document.getElementById('d-out').innerHTML='<div class="no-data" style="padding:3rem 0;text-align:center">// FETCHING...</div>';document.getElementById('d-reg').value=reg;document.getElementById('d-realm').value=realm;document.getElementById('d-name').value=name;}
-  else document.getElementById('d-out').innerHTML='<div class="no-data" style="padding:3rem 0;text-align:center">// FETCHING...</div>';
+
+  /* ── REALM SLUG: convert "Tarren Mill" → "tarren-mill", "Mal'Ganis" → "malganis" ── */
+  const realmSlug=slugifyRealm(realm);
+
+  if(isFromSplash){
+    showDash();
+    document.getElementById('d-out').innerHTML='<div class="no-data" style="padding:3rem 0;text-align:center">// FETCHING...</div>';
+    document.getElementById('d-reg').value=reg;
+    document.getElementById('d-realm').value=realm;
+    document.getElementById('d-name').value=name;
+  } else {
+    document.getElementById('d-out').innerHTML='<div class="no-data" style="padding:3rem 0;text-align:center">// FETCHING...</div>';
+  }
   try{
-    const url=`https://raider.io/api/v1/characters/profile?region=${encodeURIComponent(reg)}&realm=${encodeURIComponent(realm)}&name=${encodeURIComponent(name)}&fields=${encodeURIComponent(FIELDS)}`;
+    const url=`https://raider.io/api/v1/characters/profile?region=${encodeURIComponent(reg)}&realm=${realmSlug}&name=${encodeURIComponent(name)}&fields=${encodeURIComponent(FIELDS)}`;
     const r=await fetch(url);const data=await r.json();
-    if(!r.ok){const msg=data.message||'Character not found.';if(isFromSplash){backToSplash();document.getElementById('splash-err').innerHTML=`<div class="splash-err">${msg}</div>`;}else{document.getElementById('d-err').innerHTML=`<div class="err-msg">${msg}</div>`;document.getElementById('d-out').innerHTML='';}return;}
+    if(!r.ok){
+      const msg=data.message||'Character not found. Check realm and name spelling.';
+      if(isFromSplash){backToSplash();document.getElementById('splash-err').innerHTML=`<div class="splash-err">${msg}</div>`;}
+      else{document.getElementById('d-err').innerHTML=`<div class="err-msg">${msg}</div>`;document.getElementById('d-out').innerHTML='';}
+      return;
+    }
     render(data,reg);
-  }catch(e){const msg='Network error.';if(isFromSplash){backToSplash();document.getElementById('splash-err').innerHTML=`<div class="splash-err">${msg}</div>`;}else{document.getElementById('d-err').innerHTML=`<div class="err-msg">${msg}</div>`;document.getElementById('d-out').innerHTML='';}}
+  }catch(e){
+    const msg='Network error — please try again.';
+    if(isFromSplash){backToSplash();document.getElementById('splash-err').innerHTML=`<div class="splash-err">${msg}</div>`;}
+    else{document.getElementById('d-err').innerHTML=`<div class="err-msg">${msg}</div>`;document.getElementById('d-out').innerHTML='';}
+  }
 }
+
 function go(){fetchChar(document.getElementById('s-reg').value,document.getElementById('s-realm').value.trim(),document.getElementById('s-name').value.trim(),true)}
 function goFromDash(){fetchChar(document.getElementById('d-reg').value,document.getElementById('d-realm').value.trim(),document.getElementById('d-name').value.trim(),false)}
 document.getElementById('s-name').addEventListener('keydown',e=>{if(e.key==='Enter')go()});
 document.getElementById('d-name').addEventListener('keydown',e=>{if(e.key==='Enter')goFromDash()});
+
 renderPinnedSplash();
 </script>
+</body>
+</html>
